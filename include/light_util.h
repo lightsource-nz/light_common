@@ -158,10 +158,16 @@ extern void light_log_internal(const uint8_t level,const uint8_t *func, const ui
 extern void *light_alloc(size_t size);
 extern void light_free(void *obj);
 
-int16_t light_arraylist_indexof(void *list[], uint8_t count, void *item);
-void light_arraylist_delete_at_index(void *list[], uint8_t *count, uint8_t index);
-void light_arraylist_delete_item(void *list[], uint8_t *count, void *item);
-void light_arraylist_append(void *list[], uint8_t *count, void *item);
-void light_arraylist_insert(void *list[], uint8_t *count, void *item, uint8_t index);
+int16_t _light_arraylist_indexof(void* (*list)[], uint8_t count, void *item);
+void _light_arraylist_delete_at_index(void* (*list)[], uint8_t *count, uint8_t index);
+void _light_arraylist_delete_item(void* (*list)[], uint8_t *count, void *item);
+void _light_arraylist_append(void* (*list)[], uint8_t *count, void *item);
+void _light_arraylist_insert(void* (*list)[], uint8_t *count, void *item, uint8_t index);
+
+#define light_arraylist_indexof(list, count, item) _light_arraylist_indexof((void* (*)[]) list, count, (void *) item)
+#define light_arraylist_delete_at_index(list, count, index) _light_arraylist_delete_at_index((void* (*)[]) list, count, index)
+#define light_arraylist_delete_item(list, count, item) _light_arraylist_delete_item((void* (*)[]) list, count, (void *) item)
+#define light_arraylist_append(list, count, item) _light_arraylist_append((void* (*)[]) list, count, (void *) item)
+#define light_arraylist_insert(list, count, item, index) _light_arraylist_insert((void* (*)[]) list, count, (void *) item, index)
 
 #endif
