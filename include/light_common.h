@@ -1,5 +1,5 @@
-#ifndef _LIGHT_UTIL_H
-#define _LIGHT_UTIL_H
+#ifndef _LIGHT_COMMON_H
+#define _LIGHT_COMMON_H
 
 #include <stdlib.h>
 #include <stdint.h>
@@ -7,7 +7,7 @@
 #include <stdarg.h>
 #include <assert.h>
 
-#include <light_util_compiler.h>
+#include <light_common_compiler.h>
 
 // -- IMPORTANT - PLEASE NOTE --
 // by default, we disable all logging and debug features, as these may create

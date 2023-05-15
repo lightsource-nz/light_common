@@ -1,5 +1,5 @@
 /*
- *  light_util.c
+ *  light_common.c
  *  common utility routines and data types for lightsource.nz projects
  * 
  *  authored by Alex Fulton
@@ -7,14 +7,14 @@
  * 
  */
 
-#include "light_util.h"
+#include "light_common.h"
 
 #include <stdio.h>
 #include <string.h>
 
 static uint8_t log_buffer[LIGHT_LOG_BUFFER_SIZE];
 
-void light_util_init()
+void light_common_init()
 {
 
 }
