@@ -148,7 +148,7 @@
 #define LIGHT_NO_MEMORY                 (uint8_t) 0x2u
 #define LIGHT_NO_RESOURCE               (uint8_t) 0x3u
 
-extern void light_util_init();
+extern void light_common_init();
 extern const uint8_t *light_error_to_string(uint8_t level);
 extern const uint8_t *light_run_mode_to_string(uint8_t mode);
 extern const uint8_t *light_log_level_to_string(uint8_t level);
