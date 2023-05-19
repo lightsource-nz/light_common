@@ -1,4 +1,4 @@
-#include<light_util.h>
+#include<light_common.h>
 
 #include<stdio.h>
 

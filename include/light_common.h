@@ -9,6 +9,9 @@
 
 #include <light_common_compiler.h>
 
+#define _TO_STR(arg) #arg
+#define TO_STR(arg) _TO_STR(arg)
+
 // -- IMPORTANT - PLEASE NOTE --
 // by default, we disable all logging and debug features, as these may create
 // performance issues or security vulnerabilities if left enabled accidentally
@@ -131,6 +134,46 @@
 #define light_fatal(format, ...) \
         do { light_log_internal(LOG_ERROR, __func__, format, __VA_ARGS__); panic(format, __VA_ARGS__); } while(0)
 
+// by default, assume a bare-metal target system
+#ifndef SYSTEM
+#define SYSTEM NONE
+#endif
+
+#define SYSTEM_NONE           0
+#define SYSTEM_PICO_SDK       1
+#define SYSTEM_FREERTOS       2
+
+#define _GET_SYSTEM(system) SYSTEM_## system
+#define GET_SYSTEM(system) _GET_SYSTEM(system)
+
+#define LIGHT_SYSTEM GET_SYSTEM(SYSTEM)
+
+// PLATFORM defines where code is to be executed: on target hardware, simulator,
+// development host machine, etc.
+// by default we build for the target embedded hardware platform
+#ifndef PLATFORM
+#define PLATFORM TARGET
+#endif
+
+#define PLATFORM_TARGET         0
+#define PLATFORM_HOST           1
+#define PLATFORM_EMULATOR       2
+
+#define _GET_PLATFORM(platform) PLATFORM_## platform
+#define GET_PLATFORM(platform) _GET_PLATFORM(platform)
+
+#define LIGHT_PLATFORM GET_PLATFORM(PLATFORM)
+
+#define LIGHT_BUILD_STRING "SYSTEM:" TO_STR(SYSTEM) " // PLATFORM:" TO_STR(PLATFORM) " // RUN_MODE:" TO_STR(RUN_MODE)
+
+/*
+// this section is subject to change as the framework's view of the host and target systems evolves.
+// for now we just define SYSTEM and PLATFORM to give applications a broad view of their runtime context.
+
+#define LIGHT_TARGET_STRING ( #TARGET_CHIP "//" #TARGET_ARCH "//" #TARGET_CORE )
+#define LIGHT_HOST_STRING ( #HOST_SYSTEM "//" #HOST_ARCH )
+*/
+
 // type manipulation macros shamelessly borrowed from the Linux kernel
 #define container_of(ptr, type, member) ({                          \
         void *__mptr = (void *)(ptr);                               \
@@ -154,7 +197,7 @@ extern const uint8_t *light_run_mode_to_string(uint8_t mode);
 extern const uint8_t *light_log_level_to_string(uint8_t level);
 extern void light_log_internal(const uint8_t level,const uint8_t *func, const uint8_t *format, ...);
 
-// mapped to default malloc/free routines for platform
+// mapped to default malloc/free routines for SYSTEM
 extern void *light_alloc(size_t size);
 extern void light_free(void *obj);
 
