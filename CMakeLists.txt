@@ -22,39 +22,45 @@ target_sources(
 # mode defaults to production
 if(NOT DEFINED LIGHT_RUN_MODE)
         message("LIGHT_RUN_MODE not set, defaulting to PRODUCTION")
-        set(LIGHT_RUN_MODE PRODUCTION PARENT_SCOPE)
+        set(LIGHT_RUN_MODE PRODUCTION)
 else()
-        message("LIGHT_RUN_MODE is set to ${LIGHT_RUN_MODE}")
+        message("LIGHT_RUN_MODE is ${LIGHT_RUN_MODE}")
 endif()
 
 # system defaults to bare-metal
 if(NOT DEFINED LIGHT_SYSTEM)
         message("LIGHT_SYSTEM not set, defaulting to NONE")
-        set(LIGHT_SYSTEM NONE PARENT_SCOPE)
+        set(LIGHT_SYSTEM NONE)
 else()
-        message("LIGHT_SYSTEM is set to ${LIGHT_SYSTEM}")
+        message("LIGHT_SYSTEM is ${LIGHT_SYSTEM}")
 endif()
 
 # platform defaults to on-device
 if(NOT DEFINED LIGHT_PLATFORM)
         message("LIGHT_PLATFORM not set, defaulting to TARGET")
-        set(LIGHT_PLATFORM TARGET PARENT_SCOPE)
+        set(LIGHT_PLATFORM TARGET)
 else()
-        message("LIGHT_PLATFORM is set to ${LIGHT_PLATFORM}")
+        message("LIGHT_PLATFORM is ${LIGHT_PLATFORM}")
 endif()
 
-if(LIGHT_SYSTEM EQUAL PICO_SDK)
-        include(pico_sdk_import.cmake)
+set(LIGHT_RUN_MODE ${LIGHT_RUN_MODE} PARENT_SCOPE)
+set(LIGHT_SYSTEM ${LIGHT_SYSTEM} PARENT_SCOPE)
+set(LIGHT_PLATFORM ${LIGHT_PLATFORM} PARENT_SCOPE)
 
-        if(LIGHT_PLATFORM EQUAL TARGET)
-                set(PICO_PLATFORM rp2040 PARENT_SCOPE)
-        elseif(LIGHT_PLATFORM EQUAL HOST)
-                set(PICO_PLATFORM host PARENT_SCOPE)
+if(LIGHT_SYSTEM STREQUAL PICO_SDK)
+        message("Loading pico-sdk support")
+
+        if(LIGHT_PLATFORM STREQUAL TARGET)
+                set(PICO_PLATFORM rp2040)
+        elseif(LIGHT_PLATFORM STREQUAL HOST)
+                set(PICO_PLATFORM host)
         endif()
+
+        set(PICO_PLATFORM ${PICO_PLATFORM} PARENT_SCOPE)
         
+        include(pico_sdk_import.cmake)
         pico_sdk_init()
         
-        # pico_platform must be linked to correctly define PICO_RP2040 in on-device builds
         target_link_libraries(
                 light_common
                 INTERFACE
