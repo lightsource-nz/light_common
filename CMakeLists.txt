@@ -24,7 +24,7 @@ if(NOT DEFINED LIGHT_RUN_MODE)
         message("LIGHT_RUN_MODE not set, defaulting to PRODUCTION")
         set(LIGHT_RUN_MODE PRODUCTION)
 else()
-        message("LIGHT_RUN_MODE is ${LIGHT_RUN_MODE}")
+        message("LIGHT_RUN_MODE is set to ${LIGHT_RUN_MODE}")
 endif()
 
 # system defaults to bare-metal
@@ -32,7 +32,7 @@ if(NOT DEFINED LIGHT_SYSTEM)
         message("LIGHT_SYSTEM not set, defaulting to NONE")
         set(LIGHT_SYSTEM NONE)
 else()
-        message("LIGHT_SYSTEM is ${LIGHT_SYSTEM}")
+        message("LIGHT_SYSTEM is set to ${LIGHT_SYSTEM}")
 endif()
 
 # platform defaults to on-device
@@ -40,7 +40,7 @@ if(NOT DEFINED LIGHT_PLATFORM)
         message("LIGHT_PLATFORM not set, defaulting to TARGET")
         set(LIGHT_PLATFORM TARGET)
 else()
-        message("LIGHT_PLATFORM is ${LIGHT_PLATFORM}")
+        message("LIGHT_PLATFORM is set to ${LIGHT_PLATFORM}")
 endif()
 
 set(LIGHT_RUN_MODE ${LIGHT_RUN_MODE} PARENT_SCOPE)
