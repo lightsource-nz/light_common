@@ -197,6 +197,7 @@
 #define LIGHT_INVALID                   (uint8_t) 0x1u
 #define LIGHT_NO_MEMORY                 (uint8_t) 0x2u
 #define LIGHT_NO_RESOURCE               (uint8_t) 0x3u
+#define LIGHT_STATE_INVALID             (uint8_t) 0x4u
 
 extern void light_common_init();
 extern const uint8_t *light_error_to_string(uint8_t level);
